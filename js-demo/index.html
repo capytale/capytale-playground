@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Questionnaire</title>
+</head>
+
+<body>
+  <div id="loading-screen">
+    <p>Chargement...</p>
+  </div>
+  <div id="app" style="display: none">
+    <h1>Questionnaire</h1>
+    <menu>
+      <button id="add-question" onclick="addQuestion()">
+        Ajouter une question
+      </button>
+      <button id="preview" onclick="previewSurvey()">
+        Aperçu (vue élève)
+      </button>
+      <button id="edit" onclick="editSurvey()" style="display: none">
+        Retour à l'édition
+      </button>
+    </menu>
+    <div id="create-questions-container"></div>
+    <div id="answer-questions-container" style="display: none"></div>
+  </div>
+
+  <!-- Import du script JavaScript compilé -->
+  <script type="module">
+    import { addQuestion, removeQuestion, previewSurvey, editSurvey,
+      triggerOnQuestionsChange, triggerOnAnswersChange, onAnswerInputChange, showApp } from "./script.js";
+    import { initCapytale } from "./capytale.js";
+    window.addQuestion = addQuestion;
+    window.removeQuestion = removeQuestion;
+    window.previewSurvey = previewSurvey;
+    window.editSurvey = editSurvey;
+    window.triggerOnQuestionsChange = triggerOnQuestionsChange;
+    window.triggerOnAnswersChange = triggerOnAnswersChange;
+    window.onAnswerInputChange = onAnswerInputChange;
+    // on ne déclenche le mode Capytale que si le paramètre "capytale" est présent dans l'URL
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has("capytale")) {
+      initCapytale();
+    } else {
+      showApp();
+    }
+  </script>
+</body>
+
+</html>
